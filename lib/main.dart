@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp/calls.dart';
+import 'package:whatsapp/chats.dart';
+import 'package:whatsapp/settings.dart';
+import 'package:whatsapp/status.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -13,207 +17,58 @@ class Whatsapp extends StatefulWidget {
 }
 
 class _WhatsappState extends State<Whatsapp> {
+  var currentindex = 0;
+  var tabs = [
+    Status(),
+    Calls(),
+    Center(child: Text('Camera')),
+    Chats(),
+    Settings(),
+
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Align(
-            alignment: Alignment.center,
-            child: Text(
-              'Edit',
-              style: TextStyle(
-                color: Colors.blue[400],
-              ),
-            ),
-          ),
-        ),
-        elevation: 0.0,
-        bottom: PreferredSize(
-          preferredSize: Size(30.0,30.0),
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Text(
-                    'Chats',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 35.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        backgroundColor: Colors.white70,
-        actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(18.0),
-            child: Icon(
-              Icons.sms,
-              color: Colors.blue[400],
-            ),
-          ),
-        ],
-      ),
-      body: Container(
-        height: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.grey[300],
-                  ),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search',
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                      ),
-                      border: InputBorder.none,
-                      icon: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(width: 15.0,),
-                    CircleAvatar(
-                      radius: 16.0,
-                      backgroundColor: Colors.grey[200],
-                      child: Icon(
-                        Icons.restore_from_trash,
-                        size: 28.0,
-                      ),
-                    ),
-                    SizedBox(width: 10.0,),
-                    Text(
-                        'Archived Chats',
-                      style: TextStyle(
-                        color: Colors.blue[500],
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    Spacer(flex: 1,),
-                    Text(
-                        'Number',
-                      style: TextStyle(
-                        color: Colors.grey[500],
-                      ),
-                    ),
-                    SizedBox(width: 15.0,),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: <Widget>[
-                    Spacer(
-                      flex: 1,
-                    ),
-                    Text(
-                      'Broadcast Lists',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.blueAccent[100],
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    Spacer(
-                      flex: 15,
-                    ),
-                    Text(
-                      'New Group',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.blueAccent[100],
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    Spacer(
-                      flex: 1,
-                    ),
-                  ],
-                ),
-              ),
-              Divider(
-                height: 3.0,
-              ),
-              ListView.builder(
-                itemCount: 20,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => List(),
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: tabs[currentindex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3,
-
+        currentIndex: currentindex,
+        onTap: (index){
+          setState(() {
+            currentindex = index;
+          });
+        },
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blue[500],
         unselectedItemColor: Colors.grey[500],
-
         items: [
           BottomNavigationBarItem(
             icon: Icon(
               Icons.data_usage,
-
             ),
             title: Text('Status'),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.call,
-
             ),
             title: Text('Calls'),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.camera_alt,
-
             ),
             title: Text('Camera'),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.message,
-
             ),
             title: Text('Chats'),
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.settings,
-
             ),
             title: Text('Settings'),
           ),
@@ -225,7 +80,7 @@ class _WhatsappState extends State<Whatsapp> {
   Widget List() => Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
-          color: Colors.grey[100],
+          color: Colors.white,
         ),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Padding(
@@ -315,6 +170,4 @@ class _WhatsappState extends State<Whatsapp> {
           ),
         ),
       );
-
-
 }
